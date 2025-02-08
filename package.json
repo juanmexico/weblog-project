@@ -1,0 +1,36 @@
+{
+  "name": "weblog",
+  "version": "1.0.0",
+  "description": "Simple weblog",
+  "main": "app.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node app",
+    "dev": "cross-env NODE_ENV=development DEBUG=weblog-app nodemon app"
+  },
+  "keywords": [],
+  "author": "juan mexico",
+  "license": "",
+  "dependencies": {
+    "app-root-path": "^3.1.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^5.1.0",
+    "debug": "^4.4.0",
+    "dotenv": "^8.6.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1",
+    "mongoose": "^5.13.23",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.7",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "winston": "^3.17.0",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
