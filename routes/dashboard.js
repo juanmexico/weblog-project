@@ -10,4 +10,8 @@ const router = new Router();
 //  @route  GET /dashboard
 router.get("/", auth, admincontroller.getDashboard);
 
+//  @desc   AddPost
+//  @route  GET /dashboard/add-post
+router.get("/add-post", auth, admincontroller.AddPost);
+
 module.exports = router;
