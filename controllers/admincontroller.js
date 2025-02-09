@@ -1,12 +1,18 @@
 const Blog = require("../models/blog");
 
 exports.getDashboard = async (req, res) => {
-  res.render("private/blogs", {
-    pageTitle: "بخش مدیریت | داشبورد",
-    path: "/dashboard",
-    layout: "./layouts/dashLayout",
-    fullname: req.user.fullname,
-  });
+  try {
+    const blogs = await Blog.find({ user: req.user.id });
+    res.render("private/blogs", {
+      pageTitle: "بخش مدیریت | داشبورد",
+      path: "/dashboard",
+      layout: "./layouts/dashLayout",
+      fullname: req.user.fullname,
+      blogs,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.AddPost = (req, res) => {
