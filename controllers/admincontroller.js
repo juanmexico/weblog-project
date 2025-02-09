@@ -1,5 +1,6 @@
 const Blog = require("../models/blog");
 const { formatDate } = require("../utils/jalali");
+const { get500 } = require("./erorrscontroller");
 
 exports.getDashboard = async (req, res) => {
   try {
@@ -14,6 +15,7 @@ exports.getDashboard = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    get500(req, res);
   }
 };
 
@@ -28,9 +30,11 @@ exports.AddPost = (req, res) => {
 
 exports.createPost = async (req, res) => {
   try {
+    throw new Error("err");
     await Blog.create({ ...req.body, user: req.user.id });
     res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
+    get500(req, res);
   }
 };
