@@ -47,6 +47,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    unset: "destroy",
     store: MongoStore.create({ mongoUrl: "mongodb://localhost:27017/blog_db" }),
   })
 );
