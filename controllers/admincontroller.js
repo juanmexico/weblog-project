@@ -30,7 +30,6 @@ exports.AddPost = (req, res) => {
 
 exports.createPost = async (req, res) => {
   try {
-    throw new Error("err");
     await Blog.create({ ...req.body, user: req.user.id });
     res.redirect("/dashboard");
   } catch (err) {
