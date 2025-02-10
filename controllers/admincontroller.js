@@ -1,4 +1,6 @@
 const multer = require("multer");
+const sharp = require("sharp");
+const uuid = require("uuid").v4;
 
 const Blog = require("../models/blog");
 const { formatDate } = require("../utils/jalali");
@@ -59,16 +61,21 @@ exports.createPost = async (req, res) => {
 exports.uploadImage = (req, res) => {
   const upload = multer({
     limits: { fileSize: 4000000 },
-    dest: "uploads/",
-    storage: storage,
     fileFilter: fileFilter,
   }).single("image");
 
-  upload(req, res, (err) => {
+  upload(req, res, async (err) => {
     if (err) {
       res.send(err);
     } else {
       if (req.file) {
+        const fileName = `${uuid()}_${req.file.originalname}`;
+        await sharp(req.file.buffer)
+          .jpeg({
+            quality: 60,
+          })
+          .toFile(`./public/uploads/${fileName}`)
+          .catch((err) => console.log(err));
         res.status(200).send("آپلود عکس موفقیت آمیز بود");
       } else {
         res.send("جهت اپلود عکس رو انتخاب کنید");
