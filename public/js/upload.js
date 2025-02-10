@@ -19,7 +19,7 @@ document.getElementById("imageUpload").onclick = function () {
 
   let formData = new FormData();
 
-  if (selectedImage.file.length > 0) {
+  if (selectedImage.files.length > 0) {
     formData.append("image", selectedImage.files[0]);
     xhttp.send(formData);
   } else {
