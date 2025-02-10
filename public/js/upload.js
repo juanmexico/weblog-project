@@ -3,6 +3,8 @@ document.getElementById("imageUpload").onclick = function () {
 
   const imageStatus = document.getElementById("imageStatus");
   const selectedImage = document.getElementById("selectedImage");
+  const progressDiv = document.getElementById("progressDiv");
+  const progressBar = document.getElementById("progressBar");
 
   xhttp.onreadystatechange = function () {
     imageStatus.innerHTML = this.responseText;
@@ -13,13 +15,19 @@ document.getElementById("imageUpload").onclick = function () {
   xhttp.upload.onprogress = function (e) {
     if (e.lengthComputable) {
       let result = Math.floor((e.loaded / e.total) * 100);
-      console.log(result + "%");
+      if (result !== 100) {
+        progressBar.innerHTML = result + "%";
+        progressBar.style = "width:" + result + "%";
+      } else {
+        progressDiv.style = "display: none";
+      }
     }
   };
 
   let formData = new FormData();
 
   if (selectedImage.files.length > 0) {
+    progressDiv.style = "display: block";
     formData.append("image", selectedImage.files[0]);
     xhttp.send(formData);
   } else {
