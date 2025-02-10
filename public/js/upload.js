@@ -9,9 +9,17 @@ document.getElementById("imageUpload").onclick = function () {
   };
 
   xhttp.open("POST", "/dashboard/image-upload");
+
+  xhttp.upload.onprogress = function (e) {
+    if (e.lengthComputable) {
+      let result = Math.floor((e.loaded / e.total) * 100);
+      console.log(result + "%");
+    }
+  };
+
   let formData = new FormData();
 
-  if (selectedImage.length < 0) {
+  if (selectedImage.file.length > 0) {
     formData.append("image", selectedImage.files[0]);
     xhttp.send(formData);
   } else {
