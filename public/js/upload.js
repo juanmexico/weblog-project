@@ -5,9 +5,15 @@ document.getElementById("imageUpload").onclick = function () {
   const selectedImage = document.getElementById("selectedImage");
   const progressDiv = document.getElementById("progressDiv");
   const progressBar = document.getElementById("progressBar");
+  const uploadResult = document.getElementById("uploadResult");
 
   xhttp.onreadystatechange = function () {
-    imageStatus.innerHTML = this.responseText;
+    if (xhttp.status === 200) {
+      imageStatus.innerHTML = "با موفقیت اپلود شد";
+      uploadResult.innerHTML = this.responseText;
+    } else {
+      imageStatus.innerHTML = this.responseText;
+    }
   };
 
   xhttp.open("POST", "/dashboard/image-upload");
