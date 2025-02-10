@@ -18,4 +18,8 @@ router.get("/add-post", auth, admincontroller.AddPost);
 //  @route  POST /dashboard/add-post
 router.post("/add-post", auth, admincontroller.createPost);
 
+//  @desc dashboard handel Image upload
+//  @route  POST /dashboard/add-post
+router.post("/image-upload", auth, admincontroller.uploadImage);
+
 module.exports = router;
