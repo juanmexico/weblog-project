@@ -33,6 +33,69 @@ exports.AddPost = (req, res) => {
   });
 };
 
+exports.getEditPost = async (req, res) => {
+  const post = await Blog.findOne({
+    _id: req.params.id,
+  });
+
+  if (!post) {
+    return res.redirect("errors/404");
+  }
+
+  if (post.user.toString() != req.user._id) {
+    return res.redirect("/dashboard");
+  } else {
+    res.render("private/editPost", {
+      pageTitle: "بخش مدیریت | ویرایش پست",
+      path: "/dashboard/edit-post",
+      layout: "./layouts/dashLayout",
+      fullname: req.user.fullname,
+      post,
+    });
+  }
+};
+
+exports.editPost = async (req, res) => {
+  const errorArr = [];
+
+  const post = await Blog.findOne({ _id: req.params.id });
+  try {
+    await Blog.postValidation(req.body);
+
+    if (!post) {
+      return res.redirect("errors/404");
+    }
+
+    if (post.user.toString() != req.user._id) {
+      return res.redirect("/dashboard");
+    } else {
+      const { title, status, body } = req.body;
+      post.title = title;
+      post.status = status;
+      post.body = body;
+
+      await post.save();
+      return res.redirect("/dashboard");
+    }
+  } catch (err) {
+    console.log(err);
+    err.inner.forEach((e) => {
+      errorArr.push({
+        name: e.path,
+        message: e.message,
+      });
+    });
+    res.render("private/editPost", {
+      pageTitle: "بخش مدیریت | ویرایش پست",
+      path: "/dashboard/edit-post",
+      layout: "./layouts/dashLayout",
+      fullname: req.user.fullname,
+      errors: errorArr,
+      post,
+    });
+  }
+};
+
 exports.createPost = async (req, res) => {
   const errorArr = [];
 

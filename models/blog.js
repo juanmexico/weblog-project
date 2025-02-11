@@ -16,7 +16,7 @@ const blogSchmea = new mongoose.Schema({
   status: {
     type: String,
     default: "عمومی",
-    enum: ["عمومی", "خصوصی"],
+    enum: ["private", "public"],
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
