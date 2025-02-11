@@ -17,6 +17,9 @@ router.get("/add-post", auth, admincontroller.AddPost);
 //  @desc dashboard  Edit post
 //  @route  GET /dashboard/edit-post/:id
 router.get("/edit-post/:id", auth, admincontroller.getEditPost);
+//  @desc dashboard  delete post
+//  @route  GET /dashboard/delete-post/
+router.get("/delete-post/:id", auth, admincontroller.deletePost);
 
 //  @desc dashboard handel  Post create
 //  @route  POST /dashboard/add-post
