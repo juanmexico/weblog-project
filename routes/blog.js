@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const blogcontroller = require("../controllers/blog");
+const blogcontroller = require("../controllers/blogcontroller");
 const router = new Router();
 
 //  @desc   Weblog Index Page
