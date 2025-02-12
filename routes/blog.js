@@ -6,4 +6,8 @@ const router = new Router();
 //  @route  GET /
 router.get("/", blogcontroller.getindex);
 
+//  @desc   Weblog page post
+//  @route  GET /
+router.get("/post/:id", blogcontroller.getSinglePost);
+
 module.exports = router;
