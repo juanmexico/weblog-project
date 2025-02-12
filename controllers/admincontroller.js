@@ -10,8 +10,6 @@ const { fileFilter } = require("../utils/multer");
 exports.getDashboard = async (req, res) => {
   const page = +req.query.page || 1;
   const postPerPage = 2;
-  console.log(page);
-  console.log(typeof page);
   try {
     const numberOfPosts = await Blog.find({
       user: req.user._id,
