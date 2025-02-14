@@ -11,6 +11,7 @@ const { fileFilter } = require("../utils/multer");
 exports.getDashboard = async (req, res) => {
   const page = +req.query.page || 1;
   const postPerPage = 2;
+
   try {
     const numberOfPosts = await Blog.find({
       user: req.user._id,
@@ -18,6 +19,7 @@ exports.getDashboard = async (req, res) => {
     const blogs = await Blog.find({ user: req.user.id })
       .skip((page - 1) * postPerPage)
       .limit(postPerPage);
+
     res.render("private/blogs", {
       pageTitle: "بخش مدیریت | داشبورد",
       path: "/dashboard",
@@ -117,29 +119,19 @@ exports.deletePost = async (req, res) => {
     res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
-    res.redirect("errors/500");
+    res.render("errors/500");
   }
 };
 
 exports.createPost = async (req, res) => {
   const errorArr = [];
-
-  const thumbnail = req.files ? req.files.thumbnail : {};
-  const fileName = `${shortId.generate()}_${thumbnail.name}`;
-  const uploadPath = `${appRoot}/public/uploads/thumbnails/${fileName}`;
   try {
-    req.body = { ...req.body, thumbnail };
-
-    console.log(req.body);
-
     await Blog.postValidation(req.body);
-
-    await sharp(thumbnail.data)
-      .jpeg({ quality: 60 })
-      .toFile(uploadPath)
-      .catch((err) => console.log(err));
-
-    await Blog.create({ ...req.body, user: req.user.id, thumbnail: fileName });
+    await Blog.create({
+      ...req.body,
+      user: req.user.id,
+      thumbnail: fileName,
+    });
     res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
@@ -164,7 +156,6 @@ exports.uploadImage = (req, res) => {
     limits: { fileSize: 4000000 },
     fileFilter: fileFilter,
   }).single("image");
-
   upload(req, res, async (err) => {
     if (err) {
       if (err.code === "LIMIT_FILE_SIZE") {
@@ -184,7 +175,7 @@ exports.uploadImage = (req, res) => {
           .catch((err) => console.log(err));
         res.status(200).send(`http://localhost:3000/uploads/${fileName}`);
       } else {
-        res.send("جهت اپلود عکس رو انتخاب کنید");
+        res.send("جهت آپلود باید عکسی انتخاب کنید");
       }
     }
   });

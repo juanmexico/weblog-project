@@ -19,8 +19,8 @@ const blogSchmea = new mongoose.Schema({
     enum: ["private", "public"],
   },
   thumbnail: {
-    tyoe: String,
-    // required: true,
+    type: String,
+    required: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

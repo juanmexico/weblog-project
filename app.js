@@ -1,7 +1,5 @@
 const path = require("path");
-
 const debug = require("debug")("weblog-app");
-const fileupload = require("express-fileupload");
 const express = require("express");
 const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
@@ -41,11 +39,8 @@ app.set("layout", "./layouts/mainLayout");
 app.set("views", "views");
 
 //* BodyPaser
-app.use(bodyparser.urlencoded({ extended: false }));
-app.use(bodyparser.json());
-//* fileupload
-app.use(fileupload());
-
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 //* Session
 app.use(
   session({
