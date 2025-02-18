@@ -18,10 +18,6 @@ const blogSchmea = new mongoose.Schema({
     default: "عمومی",
     enum: ["private", "public"],
   },
-  thumbnail: {
-    type: String,
-    required: true,
-  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
